@@ -1,7 +1,4 @@
 local ReplicatedFirst = game.ReplicatedFirst
-local Modules = ReplicatedFirst.Modules
-local PSA = _G.require(Modules.PackedSparseArray)
-
 local QEdge = { }
 QEdge.__index = QEdge
 
