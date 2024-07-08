@@ -1,6 +1,9 @@
 local DPoint = require(script.DPoint)
 local QuadEdge = require(script.QuadEdge)
 local FA = require(script.FastArray)
+local VEdge = require(script.VoronoiEdge)
+local VPoint = require(script.VPoint)
+local Cell = require(script.Cell)
 
 local Delaunay = { }
 local EdgeList
@@ -81,14 +84,14 @@ local function GetCircumCircle(p1, p2, p3)
 	local p1x, p2x, p3x = p1.X, p2.X, p3.X
 	local p1y, p2y, p3y = p1.Y, p2.Y, p3.Y
 	local D =  2 * ( p1x * (p2y - p3y) +
-				 p2x * (p3y - p1y) +
-				 p3x * (p1y - p2y))
+		p2x * (p3y - p1y) +
+		p3x * (p1y - p2y))
 	local x = (( p1x * p1x + p1y * p1y) * (p2y - p3y) +
-			   ( p2x * p2x + p2y * p2y) * (p3y - p1y) +
-			   ( p3x * p3x + p3y * p3y) * (p1y - p2y))
+		( p2x * p2x + p2y * p2y) * (p3y - p1y) +
+		( p3x * p3x + p3y * p3y) * (p1y - p2y))
 	local y = (( p1x * p1x + p1y * p1y) * (p3x - p2x) +
-			   ( p2x * p2x + p2y * p2y) * (p1x - p3x) +
-			   ( p3x * p3x + p3y * p3y) * (p2x - p1x))
+		( p2x * p2x + p2y * p2y) * (p1x - p3x) +
+		( p3x * p3x + p3y * p3y) * (p2x - p1x))
 
 	x = x / D
 	y = y / D
@@ -106,9 +109,7 @@ local function IsInCircle(p1, p2, p3, oPoint)
 	return (dist * dist) < r
 end
 
-local VEdge = _G.require(script.VoronoiEdge)
-local VPoint = _G.require(script.VPoint)
-local Cell = _G.require(script.Cell)
+
 local function GetVoronoi(QEdges: Array<Edge>) : (Array<VCell>, Array<VEdge>, FastArray, Array<VPoint>)
 	--The number of edges is 4x due to them being quad edges.
 	local VEdges: Array<VEdge> = table.create( #QEdges.Contents / 4 )
