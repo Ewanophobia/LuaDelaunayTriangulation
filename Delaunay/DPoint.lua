@@ -25,14 +25,14 @@ local function polarSort(a, b)
 		return a.theta < b.theta
 	end
 
-    return a.r < b.r
+	return a.r < b.r
 end
 local function xySort(a, b)
 	if a.X == b.X then
 		return a.Y < b.Y
 	end
 
-    return a.X < b.X
+	return a.X < b.X
 end
 
 function Point.Polar_Sort( points: Array<DPoint> )
